@@ -11,8 +11,9 @@ Define a senha padrão para root de qualquer host (root@%). Esse parametro é ob
 Especifica database a ser criado durante a inicialização do container
 
 ## Exemplos de comandos
-
-docker run -d --name mysql40 -v /meudatabase:/var/db/mysql -p 3306:3306 darkbebs/mysql40
+```
+$ docker run -d --name mysql40 -v /meudatabase:/var/db/mysql -p 3306:3306 darkbebs/mysql40
+```
 
 ## Build
 
