@@ -50,7 +50,11 @@ _get_config() {
 DATA_DIR="$(_get_config 'datadir')"
 
 # Initialize database if necessary
-if [ ! -d "$DATA_DIR/mysql" ]; then
+if [ ! -d "${DATA_DIR}tmp" ]; then
+	mkdir "${DATA_DIR}tmp"
+	chown mysql:mysql  "${DATA_DIR}/tmp"
+fi
+if [ ! -d "${DATA_DIR}mysql" ]; then
   file_env 'MYSQL_ROOT_PASSWORD'
   if [ -z "$MYSQL_ROOT_PASSWORD" -a -z "$MYSQL_ALLOW_EMPTY_PASSWORD" -a -z "$MYSQL_RANDOM_ROOT_PASSWORD" ]; then
     echo >&2 'error: database is uninitialized and password option is not specified '
@@ -65,7 +69,8 @@ if [ ! -d "$DATA_DIR/mysql" ]; then
   mysql_install_db --user=mysql --datadir="$DATA_DIR" --rpm
   chown -R mysql: "$DATA_DIR"
   echo 'Database initialized'
-    tfile=`mktemp`
+  
+  tfile=`mktemp`
   if [ ! -f "$tfile" ]; then
       return 1
   fi
