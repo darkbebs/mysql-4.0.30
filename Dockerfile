@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:2.6
 MAINTAINER Dark <big.dark@gmail.com>
 
 ENV MYSQL_VER="4.0.30" WORK_DIR="/usr/local/src"
@@ -6,9 +6,7 @@ ADD mysql-${MYSQL_VER}.tar.gz ${WORK_DIR}/
 COPY my.cnf /etc/my.cnf
 
 RUN set -x ; \
-    addgroup mysql ; \
-    adduser -D -G mysql mysql &&\
-    apk update && apk add --update gcc g++ make tar ncurses-dev musl-utils bison libtool readline-dev tzdata &&\
+    apk update && apk add --update gcc g++ make tar ncurses-dev bison libtool readline-dev tzdata file &&\
     rm -rf /var/cache/apk/* &&\
     cd ${WORK_DIR} &&\
     cd mysql-${MYSQL_VER} &&\
